@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>礼物编辑页</title>
     <link rel="stylesheet" href="css/edit.css">
+    <!-- 全局环境变量配置 -->
+    <script>
+        // 设置API URL，生产环境中会被Render环境变量替换
+        window.REACT_APP_API_URL = "${REACT_APP_API_URL:-}" || window.location.origin;
+    </script>
     <!-- Quill富文本编辑器样式 -->
     <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
 </head>

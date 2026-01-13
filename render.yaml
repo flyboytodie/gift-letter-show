@@ -1,0 +1,29 @@
+# Render 配置文件
+# 用于部署前端和后端应用
+
+# 后端服务
+- type: web
+  name: gift-letter-backend
+  env: node
+  buildCommand: npm install
+  startCommand: node app.js
+  workingDir: backend
+  envVars:
+    - key: NODE_ENV
+      value: production
+  # 自动部署设置
+  autoDeploy: true
+
+# 前端服务
+- type: web
+  name: gift-letter-frontend
+  env: static
+  buildCommand: npm install && npm run build
+  publishPath: dist
+  envVars:
+    - key: NODE_ENV
+      value: production
+    - key: REACT_APP_API_URL
+      sync: false
+  # 自动部署设置
+  autoDeploy: true

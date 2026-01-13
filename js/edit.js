@@ -7,7 +7,8 @@ let audioFile = null;
 let audioUrl = null;
 
 // 服务器配置
-const SERVER_URL = 'http://localhost:3000';
+// 从全局变量或默认值获取API URL
+const SERVER_URL = window.REACT_APP_API_URL || window.location.origin;
 
 // 上传文件到服务器
 function uploadFileToServer(file) {
