@@ -2,7 +2,6 @@
   "name": "gift-letter-show",
   "version": "1.0.0",
   "description": "情侣礼物展示及书信展示项目",
-  "main": "index.js",
   "scripts": {
     "dev": "parcel serve edit.html show.html",
     "build": "parcel build edit.html show.html --dist-dir dist"

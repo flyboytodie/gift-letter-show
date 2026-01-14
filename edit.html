@@ -25,6 +25,14 @@
                     <button class="color-btn blue" data-color="blue">治愈蓝</button>
                 </div>
             </div>
+            <div class="edit-state" style="margin-top: 10px; padding: 10px; background-color: #f5f5f5; border-radius: 5px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <span>编辑状态管理：</span>
+                    <input type="text" id="edit-id-input" placeholder="输入编辑ID恢复编辑状态" style="flex: 1; padding: 5px; border: 1px solid #ddd; border-radius: 3px;">
+                    <button id="load-edit-btn" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">恢复</button>
+                </div>
+                <div id="current-edit-id" style="margin-top: 5px; font-size: 12px; color: #666;"></div>
+            </div>
         </header>
 
         <main>
@@ -49,7 +57,7 @@
             <!-- 背景音乐 -->
             <section class="music-section">
                 <h2>背景音乐</h2>
-                <input type="file" id="music-upload" accept=".mp3">
+                <input type="file" id="music-upload" accept="audio/*">
                 <div id="music-player" class="music-player">
                     <button id="play-btn">播放</button>
                     <input type="range" id="volume" min="0" max="1" step="0.1" value="0.5">
@@ -73,6 +81,11 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h3>编辑礼物</h3>
+            <div id="current-media-preview" style="margin-bottom: 15px; padding: 10px; background-color: #f5f5f5; border-radius: 5px; display: none;">
+                <h4 style="margin-top: 0; font-size: 14px;">当前媒体文件：</h4>
+                <div id="media-preview-content" style="margin-top: 10px;"></div>
+                <p style="margin-top: 10px; font-size: 12px; color: #666;">提示：选择新文件将替换当前媒体</p>
+            </div>
             <input type="file" id="gift-file" accept="image/*,video/*">
             <textarea id="gift-note" placeholder="请输入礼物备注"></textarea>
             <button id="save-gift" class="btn-primary">保存</button>
@@ -90,12 +103,30 @@
         </div>
     </div>
 
+    <!-- 图片裁剪弹窗 -->
+    <div id="crop-modal" class="modal">
+        <div class="modal-content large">
+            <span class="close">&times;</span>
+            <h3>裁剪图片 (1:1)</h3>
+            <div class="crop-container">
+                <img id="crop-image" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E" alt="裁剪图片">
+            </div>
+            <div class="crop-actions">
+                <button id="cancel-crop" class="btn-secondary">取消</button>
+                <button id="confirm-crop" class="btn-primary">确认裁剪</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 依赖库 -->
     <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"></script>
+    <!-- 图片裁剪库 -->
+    <link href="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/cropperjs@1.5.13/dist/cropper.min.js"></script>
     <script src="js/edit.js"></script>
 </body>
 </html>
