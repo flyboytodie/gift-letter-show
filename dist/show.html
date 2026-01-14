@@ -1,0 +1,55 @@
+<!DOCTYPE html><html lang=zh-CN><meta charset=UTF-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>礼物展示</title><link rel=stylesheet href=/show.af6652a0.css><body>
+    <div class=container>
+        <header>
+            <h1 id=site-title>我的礼物</h1>
+        </header>
+
+        <main>
+            
+            <section class=gift-section>
+                <h2>礼物</h2>
+                <div id=gift-grid class=gift-grid>
+                    
+                </div>
+            </section>
+
+            
+            <section class=letter-section>
+                <h2 id=letter-title>生日祝福</h2>
+                <div id=letter-content class=letter-content>
+                    
+                </div>
+            </section>
+
+            
+            <section class=music-section>
+                <div id=music-player class=music-player>
+                    <button id=play-btn>播放</button>
+                    <input type=range id=volume min=0 max=1 step=0.1 value=0.5>
+                    <span>背景音乐</span>
+                    <span id=music-name class=music-name></span>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p class=save-tip>✨ 这份惊喜只为你～请点击浏览器「另存为」保存整页哦 ✨</p>
+        </footer>
+    </div>
+
+    
+    <div id=image-modal class=modal>
+        <div class=modal-content>
+            <span class=close>×</span>
+            <img id=modal-image src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'/%3E" alt=预览图片>
+            <div class=modal-nav>
+                <button id=prev-btn>上一张</button>
+                <button id=next-btn>下一张</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src=https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js></script>
+    <script src=/show.bda338e4.js></script>
+
