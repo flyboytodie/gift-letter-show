@@ -1,4 +1,7 @@
 /* 全局样式 */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Nunito:wght@400;600;700&family=Bubblegum+Sans&family=Caveat:wght@400;700&family=Ma+Shan+Zheng&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -6,12 +9,13 @@
 }
 
 body {
-    font-family: 'Microsoft YaHei', 'Arial Rounded MT Bold', Arial, sans-serif;
+    font-family: 'Bubblegum Sans', 'ZCOOL QingKe HuangYou', 'Comic Neue', 'Nunito', 'Microsoft YaHei', 'Arial Rounded MT Bold', Arial, sans-serif;
     background-color: #fef5f8;
     color: #333;
     line-height: 1.6;
     transition: all 0.3s ease;
     background-image: linear-gradient(120deg, #fef5f8 0%, #fde2e7 100%);
+    overflow-x: hidden;
 }
 
 /* 颜色主题 */
@@ -32,56 +36,108 @@ body.blue {
 
 .container {
     max-width: 1000px;
-    margin: 20px auto;
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 25px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    margin: 30px auto;
+    padding: 40px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 28px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(12px);
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+    z-index: 1;
 }
 
 /* 头部样式 */
 header {
-    margin-bottom: 40px;
-    padding-bottom: 25px;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
     text-align: center;
+    position: relative;
+}
+
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
+    border-radius: 2px;
 }
 
 header h1 {
-    font-size: 36px;
+    font-size: 40px;
     font-weight: bold;
-    letter-spacing: 1px;
-    margin-bottom: 20px;
+    letter-spacing: 1.2px;
+    margin-bottom: 25px;
     animation: titleFadeIn 0.5s ease;
+    position: relative;
+    display: inline-block;
 }
 
 /* 主题色头部样式 */
 body.pink header {
-    border-bottom: 3px solid #ffd6e4;
+    border-bottom: 1px solid rgba(255, 107, 157, 0.2);
 }
 
 body.pink header h1 {
-    color: #ff6b9d;
-    text-shadow: 2px 2px 4px rgba(255, 107, 157, 0.2);
+    background: linear-gradient(120deg, #ff6b9d, #ff85b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(255, 107, 157, 0.1);
+}
+
+body.pink header::after {
+    background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
 }
 
 body.white header {
-    border-bottom: 3px solid #ddd;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 body.white header h1 {
-    color: #333;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(120deg, #333, #666);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.white header::after {
+    background: linear-gradient(90deg, transparent, #333, transparent);
 }
 
 body.blue header {
-    border-bottom: 3px solid #b3d1f3;
+    border-bottom: 1px solid rgba(74, 144, 226, 0.2);
 }
 
 body.blue header h1 {
-    color: #4a90e2;
-    text-shadow: 2px 2px 4px rgba(74, 144, 226, 0.2);
+    background: linear-gradient(120deg, #4a90e2, #6aa9f4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
+}
+
+body.blue header::after {
+    background: linear-gradient(90deg, transparent, #4a90e2, transparent);
 }
 
 @keyframes titleFadeIn {
@@ -99,121 +155,232 @@ body.blue header h1 {
 main {
     display: flex;
     flex-direction: column;
-    gap: 45px;
+    gap: 50px;
 }
 
 section {
-    background-color: #fff;
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
 }
 
 section h2 {
-    font-size: 28px;
-    margin-bottom: 25px;
+    font-size: 32px;
+    margin-bottom: 30px;
     text-align: center;
     font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+section:hover h2::after {
+    width: 120px;
 }
 
 /* 主题色section样式 */
 body.pink section {
-    border: 2px solid #ffd6e4;
+    border: 2px solid rgba(255, 107, 157, 0.3);
 }
 
 body.pink section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(255, 107, 157, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 
+        0 8px 24px rgba(255, 107, 157, 0.2),
+        0 2px 6px rgba(255, 107, 157, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 body.pink section h2 {
-    color: #ff6b9d;
-    text-shadow: 1px 1px 2px rgba(255, 107, 157, 0.2);
+    background: linear-gradient(120deg, #ff6b9d, #ff85b0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(255, 107, 157, 0.1);
+}
+
+body.pink section h2::after {
+    background: linear-gradient(90deg, transparent, #ff6b9d, transparent);
 }
 
 body.white section {
-    border: 2px solid #ddd;
+    border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 body.white section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 body.white section h2 {
-    color: #333;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(120deg, #333, #666);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.white section h2::after {
+    background: linear-gradient(90deg, transparent, #333, transparent);
 }
 
 body.blue section {
-    border: 2px solid #b3d1f3;
+    border: 2px solid rgba(74, 144, 226, 0.3);
 }
 
 body.blue section:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.2);
+    transform: translateY(-8px);
+    box-shadow: 
+        0 8px 24px rgba(74, 144, 226, 0.2),
+        0 2px 6px rgba(74, 144, 226, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 body.blue section h2 {
-    color: #4a90e2;
-    text-shadow: 1px 1px 2px rgba(74, 144, 226, 0.2);
+    background: linear-gradient(120deg, #4a90e2, #6aa9f4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(74, 144, 226, 0.1);
+}
+
+body.blue section h2::after {
+    background: linear-gradient(90deg, transparent, #4a90e2, transparent);
 }
 
 section h2::before {
     content: '🎀';
-    font-size: 24px;
+    font-size: 28px;
+    flex-shrink: 0;
 }
 
 /* 礼物展示样式 */
 .gift-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
-    margin-top: 30px;
+    gap: 30px;
+    margin-top: 40px;
+    padding: 30px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 24px;
+    box-shadow: 
+        inset 0 1px 0 rgba(255, 255, 255, 0.5),
+        0 2px 8px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+}
+
+/* 主题色礼物网格样式 */
+body.pink .gift-grid {
+    border: 3px dashed rgba(255, 107, 157, 0.3);
+    background-color: rgba(255, 245, 248, 0.7);
+}
+
+body.white .gift-grid {
+    border: 3px dashed rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+body.blue .gift-grid {
+    border: 3px dashed rgba(74, 144, 226, 0.3);
+    background-color: rgba(240, 249, 255, 0.7);
 }
 
 .gift-item {
-    background-color: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.1),
+        0 1px 3px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
     overflow: hidden;
     transition: all 0.3s ease;
     position: relative;
 }
 
+.gift-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
 /* 主题色礼物样式 */
 body.pink .gift-item {
-    border: 2px solid #ffd6e4;
+    border: 2px solid rgba(255, 107, 157, 0.3);
 }
 
 body.pink .gift-item:hover {
-    transform: translateY(-10px) rotate(1deg);
-    box-shadow: 0 8px 24px rgba(255, 107, 157, 0.2);
+    transform: translateY(-12px) rotate(1deg);
+    box-shadow: 
+        0 8px 24px rgba(255, 107, 157, 0.2),
+        0 2px 6px rgba(255, 107, 157, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     border-color: #ff6b9d;
 }
 
 body.white .gift-item {
-    border: 2px solid #ddd;
+    border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 body.white .gift-item:hover {
-    transform: translateY(-10px) rotate(1deg);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-12px) rotate(1deg);
+    box-shadow: 
+        0 8px 24px rgba(0, 0, 0, 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     border-color: #333;
 }
 
 body.blue .gift-item {
-    border: 2px solid #b3d1f3;
+    border: 2px solid rgba(74, 144, 226, 0.3);
 }
 
 body.blue .gift-item:hover {
-    transform: translateY(-10px) rotate(1deg);
-    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.2);
+    transform: translateY(-12px) rotate(1deg);
+    box-shadow: 
+        0 8px 24px rgba(74, 144, 226, 0.2),
+        0 2px 6px rgba(74, 144, 226, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
     border-color: #4a90e2;
 }
 
@@ -241,34 +408,40 @@ body.blue .gift-item:hover {
     font-size: 16px;
     min-height: 90px;
     background-color: #fefeff;
-    line-height: 1.5;
+    line-height: 1.6;
     font-weight: 500;
     transition: all 0.3s ease;
+    text-align: center;
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 /* 主题色礼物备注样式 */
 body.pink .gift-note {
     border-top: 2px solid #ffd6e4;
+    background-color: #fef5f8;
 }
 
 body.pink .gift-item:hover .gift-note {
-    background-color: #fef5f8;
+    background-color: #fde2e7;
 }
 
 body.white .gift-note {
     border-top: 2px solid #ddd;
+    background-color: #f8f9fa;
 }
 
 body.white .gift-item:hover .gift-note {
-    background-color: #f8f9fa;
+    background-color: #ffffff;
 }
 
 body.blue .gift-note {
     border-top: 2px solid #b3d1f3;
+    background-color: #f0f9ff;
 }
 
 body.blue .gift-item:hover .gift-note {
-    background-color: #f0f9ff;
+    background-color: #e0f2fe;
 }
 
 /* 书信展示样式 */
@@ -287,7 +460,7 @@ body.blue .gift-item:hover .gift-note {
     background-color: #f9f6f0;
     border-radius: 20px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    font-family: '楷体', 'STKaiti', serif;
+    font-family: 'Bubblegum Sans', 'ZCOOL QingKe HuangYou', 'Comic Neue', 'Nunito', 'Microsoft YaHei', sans-serif;
     font-size: 20px;
     line-height: 2;
     white-space: pre-wrap;
@@ -295,6 +468,41 @@ body.blue .gift-item:hover .gift-note {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+}
+
+/* 主题色书信内容样式 */
+body.pink .letter-content {
+    background-color: #fef5f8;
+    background-image: linear-gradient(120deg, rgba(255, 107, 157, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+body.white .letter-content {
+    background-color: #f8f9fa;
+    background-image: linear-gradient(120deg, rgba(0, 0, 0, 0.03) 0%, rgba(255, 255, 255, 0.97) 100%);
+}
+
+body.blue .letter-content {
+    background-color: #f0f9ff;
+    background-image: linear-gradient(120deg, rgba(74, 144, 226, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+/* 书信区域悬停效果 */
+body.pink .letter-content:hover {
+    box-shadow: 0 8px 24px rgba(255, 107, 157, 0.2);
+    border-color: #ff6b9d;
+    transform: translateY(-2px);
+}
+
+body.white .letter-content:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    border-color: #333;
+    transform: translateY(-2px);
+}
+
+body.blue .letter-content:hover {
+    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.2);
+    border-color: #4a90e2;
+    transform: translateY(-2px);
 }
 
 /* 表情掉落动画 */
@@ -425,6 +633,31 @@ body.blue .letter-content:hover {
     border-radius: 30px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
+}
+
+.music-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: #666;
+    margin-left: 10px;
+    flex-shrink: 0;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+body.pink .music-name {
+    color: #ff6b9d;
+}
+
+body.white .music-name {
+    color: #333;
+}
+
+body.blue .music-name {
+    color: #4a90e2;
 }
 
 #play-btn {

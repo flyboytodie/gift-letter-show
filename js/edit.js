@@ -22,6 +22,43 @@ function loadFromLocalStorage() {
             gifts = data.gifts || [];
             audioUrl = data.audioUrl || null;
             
+            // 更新音乐播放器UI状态
+            if (audioUrl) {
+                // 优先使用保存的原始文件名
+                const fileName = data.audioName || (() => {
+                    // 从URL中提取文件名作为备用
+                    const urlParts = audioUrl.split('/');
+                    return urlParts[urlParts.length - 1];
+                })();
+                document.getElementById('music-info').textContent = fileName;
+                
+                // 更新音乐文件名显示元素
+                const musicFilenameElement = document.getElementById('music-filename');
+                if (musicFilenameElement) {
+                    musicFilenameElement.textContent = fileName;
+                    musicFilenameElement.style.color = '#666';
+                }
+                
+                // 创建Howl实例
+                if (audio) {
+                    audio.unload();
+                }
+                audio = new Howl({
+                    src: [audioUrl],
+                    loop: true,
+                    volume: parseFloat(document.getElementById('volume').value)
+                });
+            } else {
+                document.getElementById('music-info').textContent = '未选择';
+                
+                // 清空音乐文件名显示元素
+                const musicFilenameElement = document.getElementById('music-filename');
+                if (musicFilenameElement) {
+                    musicFilenameElement.textContent = '未选择';
+                    musicFilenameElement.style.color = '#666';
+                }
+            }
+            
             // 恢复主题色
             if (data.theme) {
                 document.body.classList.remove('pink', 'white', 'blue');
@@ -66,6 +103,7 @@ function saveToLocalStorage() {
     const data = {
         gifts: gifts,
         audioUrl: audioUrl,
+        audioName: audioFile ? audioFile.name : null,
         siteTitle: document.getElementById('site-title').value,
         letterTitle: document.getElementById('letter-title').value,
         letterContent: quill ? quill.root.innerHTML : '',
@@ -86,6 +124,7 @@ async function saveEditState() {
             editId: editId,
             gifts: gifts,
             audioUrl: audioUrl,
+            audioName: audioFile ? audioFile.name : null,
             siteTitle: document.getElementById('site-title').value,
             letterTitle: document.getElementById('letter-title').value,
             letterContent: quill ? quill.root.innerHTML : '',
@@ -162,6 +201,43 @@ async function loadEditState(loadEditId) {
             gifts = data.gifts || [];
             audioUrl = data.audioUrl || null;
             
+            // 更新音乐播放器UI状态
+            if (audioUrl) {
+                // 优先使用保存的原始文件名
+                const fileName = data.audioName || (() => {
+                    // 从URL中提取文件名作为备用
+                    const urlParts = audioUrl.split('/');
+                    return urlParts[urlParts.length - 1];
+                })();
+                document.getElementById('music-info').textContent = fileName;
+                
+                // 更新音乐文件名显示元素
+                const musicFilenameElement = document.getElementById('music-filename');
+                if (musicFilenameElement) {
+                    musicFilenameElement.textContent = fileName;
+                    musicFilenameElement.style.color = '#666';
+                }
+                
+                // 创建Howl实例
+                if (audio) {
+                    audio.unload();
+                }
+                audio = new Howl({
+                    src: [audioUrl],
+                    loop: true,
+                    volume: parseFloat(document.getElementById('volume').value)
+                });
+            } else {
+                document.getElementById('music-info').textContent = '未选择';
+                
+                // 清空音乐文件名显示元素
+                const musicFilenameElement = document.getElementById('music-filename');
+                if (musicFilenameElement) {
+                    musicFilenameElement.textContent = '未选择';
+                    musicFilenameElement.style.color = '#666';
+                }
+            }
+            
             // 恢复主题色
             if (data.theme) {
                 document.body.classList.remove('pink', 'white', 'blue');
@@ -233,6 +309,44 @@ function uploadFileToServer(file) {
     });
 }
 
+// 初始化字体选择器
+function initFontSelector() {
+    const fontSelect = document.getElementById('font-select');
+    const fontPreview = document.getElementById('font-preview');
+    
+    if (fontSelect && fontPreview) {
+        // 字体选择事件
+        fontSelect.addEventListener('change', function() {
+            const selectedFont = this.value;
+            
+            // 更新预览区域字体
+            fontPreview.style.fontFamily = selectedFont;
+            
+            // 更新页面全局字体
+            document.body.style.fontFamily = selectedFont;
+            
+            // 更新Quill编辑器字体
+            if (quill) {
+                const editor = document.querySelector('.ql-editor');
+                if (editor) {
+                    editor.style.fontFamily = selectedFont;
+                }
+            }
+            
+            // 更新礼物备注字体
+            const giftNotes = document.querySelectorAll('.gift-note');
+            giftNotes.forEach(note => {
+                note.style.fontFamily = selectedFont;
+            });
+            
+            console.log('字体已更新为:', selectedFont);
+        });
+        
+        // 初始化预览字体
+        fontPreview.style.fontFamily = fontSelect.value;
+    }
+}
+
 // 初始化页面
 function initPage() {
     initQuill();
@@ -242,6 +356,7 @@ function initPage() {
     initGenerateButtons();
     initModals();
     initSortable();
+    initFontSelector();
     
     // 清理可能存在的事件监听器
     const giftGrid = document.getElementById('gift-grid');
@@ -806,6 +921,7 @@ async function generateShowPackage() {
                 type: gift.type
             })),
             audioUrl: audioUrl,
+            audioName: audioFile ? audioFile.name : null,
             theme: currentTheme
         };
         
@@ -972,42 +1088,83 @@ function initSortable() {
 
 // 初始化音乐播放器
 function initMusicPlayer() {
+    // 音乐上传按钮点击事件
+    document.getElementById('music-upload-btn').addEventListener('click', function() {
+        document.getElementById('music-upload').click();
+    });
+    
     // 音乐上传
     document.getElementById('music-upload').addEventListener('change', async function(e) {
         const file = e.target.files[0];
         if (file && file.type.startsWith('audio/')) {
             try {
+                // 先更新音乐信息，显示正在上传
+                document.getElementById('music-info').textContent = '上传中...';
+                
                 // 上传文件到服务器
                 const url = await uploadFileToServer(file);
+                
+                // 替换音乐
+                if (audio) {
+                    audio.unload();
+                    showSaveStatus('🎵 音乐已替换～');
+                } else {
+                    showSaveStatus('🎵 音乐保存成功啦～');
+                }
                 
                 audioFile = file;
                 audioUrl = url;
                 document.getElementById('music-info').textContent = file.name;
                 
-                // 创建新的Howl实例
-                if (audio) {
-                    audio.unload();
+                // 更新音乐文件名显示元素
+                const musicFilenameElement = document.getElementById('music-filename');
+                if (musicFilenameElement) {
+                    musicFilenameElement.textContent = file.name;
+                    musicFilenameElement.style.color = '#666';
                 }
                 
+                // 创建新的Howl实例
                 audio = new Howl({
                     src: [url],
                     loop: true,
-                    volume: 0.5
+                    volume: parseFloat(document.getElementById('volume').value)
                 });
                 
                 // 保存到本地存储
                 saveToLocalStorage();
-                showSaveStatus('🎵 音乐保存成功啦～');
 
             } catch (error) {
                 console.error('上传音乐失败:', error);
+                document.getElementById('music-info').textContent = '上传失败';
                 alert('😢 音乐上传失败了～请再试一次吧 💪');
 
             }
-        } else {
+        } else if (file) {
             alert('🎵 请选择音频文件哦～');
         }
-
+    });
+    
+    // 清除音乐
+    document.getElementById('clear-music').addEventListener('click', function() {
+        if (audio) {
+            audio.unload();
+            audio = null;
+        }
+        audioFile = null;
+        audioUrl = null;
+        document.getElementById('music-info').textContent = '未选择';
+        document.getElementById('play-btn').textContent = '播放';
+        
+        // 清空音乐文件名显示元素
+        const musicFilenameElement = document.getElementById('music-filename');
+        if (musicFilenameElement) {
+            musicFilenameElement.textContent = '未选择';
+            musicFilenameElement.style.color = '#666';
+        }
+        
+        // 保存到本地存储
+        saveToLocalStorage();
+        showSaveStatus('🎵 音乐已清除～');
     });
     
     // 播放/暂停按钮
@@ -1020,13 +1177,16 @@ function initMusicPlayer() {
                 audio.play();
                 this.textContent = '暂停';
             }
+        } else {
+            showSaveStatus('🎵 请先选择音乐哦～');
         }
     });
     
     // 音量控制
     document.getElementById('volume').addEventListener('input', function() {
+        const volume = parseFloat(this.value);
         if (audio) {
-            audio.volume(parseFloat(this.value));
+            audio.volume(volume);
         }
     });
 }

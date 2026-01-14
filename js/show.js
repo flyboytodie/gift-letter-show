@@ -69,6 +69,11 @@ async function loadShowData() {
                 audio.play();
                 // 更新播放按钮文本
                 document.getElementById('play-btn').textContent = '暂停';
+                
+                // 更新音乐文件名显示
+                if (data.audioName) {
+                    document.getElementById('music-name').textContent = data.audioName;
+                }
             }
         } else {
             document.body.innerHTML = `
