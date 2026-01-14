@@ -7,7 +7,11 @@ const fs = require('fs');
 const app = express();
 
 // 配置中间件
-app.use(cors());
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.static('public'));
 app.use(express.static('../')); // 提供前端静态文件
 app.use(express.json()); // 解析JSON请求

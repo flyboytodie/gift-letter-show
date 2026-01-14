@@ -690,7 +690,7 @@ function renderGifts() {
         
         let mediaElement = '';
         if (gift.type === 'image') {
-            mediaElement = `<img src="${gift.url}" alt="礼物图片" class="gift-media">
+            mediaElement = `<img src="${gift.url}" alt="礼物图片" class="gift-media" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22 viewBox=%220 0 200 200%22%3E%3Crect width=%22200%22 height=%22200%22 fill=%22%23f5f5f5%22/%3E%3Ctext x=%22100%22 y=%22100%22 font-family=%22Arial%22 font-size=%2216%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23999%22%3E图片加载失败%3C/text%3E%3C/svg%3E'">
             <button onclick="previewImage(${index})" class="preview-btn">预览</button>`;
         } else {
             mediaElement = `<video src="${gift.url}" class="gift-media">
